@@ -13,9 +13,15 @@ set +o histexpand
 DONE_STATES=("Stopped" "Finished" "Idle")
 
 # Use transmission-remote to get the torrent list from transmission-remote.
+echo "Retreiving torrent list"
 TORRENT_LIST=$(transmission-remote $TRANSMISSION_SERVER --list | sed -e '1d' -e '$d' | awk '{print $1}' | sed -e 's/[^0-9]*//g')
 
+# Wait 15 minutes to allow any last-minute processing by SickChill or CouchPotato
+echo "Waiting 15 minutes after retrieval of torrent list"
+sleep 15m
+
 # Iterate through the torrents.
+echo "Iterate through the torrent list"
 for TORRENT_ID in $TORRENT_LIST
 do
     INFO=$(transmission-remote $TRANSMISSION_SERVER --torrent "$TORRENT_ID" --info)
