@@ -34,7 +34,7 @@ do
     # If the torrent is 100% done and the state is one of the done states.
     if [[ "$PROGRESS" == "100" ]] && [[ "${DONE_STATES[@]}" =~ "$STATE" ]]; then
         echo "Torrent #$TORRENT_ID is done. Removing torrent from list."
-        transmission-remote $TRANSMISSION_SERVER --torrent "$TORRENT_ID" --remove
+        transmission-remote $TRANSMISSION_SERVER --torrent "$TORRENT_ID" --remove-and-delete
     else
         echo "Torrent #$TORRENT_ID is $PROGRESS% done with state \"$STATE\". Ignoring."
     fi
